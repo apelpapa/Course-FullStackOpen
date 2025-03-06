@@ -1,5 +1,5 @@
 ```mermaid
-sequenceDiagram;
-    Server-->Client;
-    Server->>Client;
+sequenceDiagram
+    Server-->Client
+    Server->>Client
 ```
