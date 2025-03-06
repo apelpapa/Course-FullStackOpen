@@ -1,7 +1,7 @@
 ```mermaid
-graph TD;
-    A-->B;
-    A-->C;
+sequenceDiagram;
+    Server-->Client;
+    Server->>Client;
     B-->D;
     C-->D;
 ```
