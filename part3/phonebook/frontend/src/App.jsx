@@ -101,8 +101,10 @@ const App = () => {
       return;
     }
 
-    personServer.post(newPerson).then((request) => {
-      setPersons(persons.concat(request));
+    personServer
+    .post(newPerson)
+    .then((response) => {
+      setPersons(persons.concat(response));
       setNewName("");
       setNewNumber("");
       setMessage(`Added ${newPerson.name} Successfully`);

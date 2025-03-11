@@ -59,7 +59,7 @@ app.post("/api/persons/", (req, res) => {
     });
   } else {
     persons = persons.concat(newPerson);
-    res.status(201).end();
+    res.status(201).json(newPerson);
   }
 });
 
