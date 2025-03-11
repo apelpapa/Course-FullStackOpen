@@ -6,7 +6,7 @@ mongoose.set('strictQuery',false)
 
 console.log('connecting to', url)
 mongoose.connect(url)
-.then(result => {
+  .then(() => {
     console.log('connected to MongoDB')
   })
   .catch(error => {
@@ -16,14 +16,14 @@ mongoose.connect(url)
 const phonebookSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: [true, "Username Required"],
+    required: [true, 'Username Required'],
     minlength: 3
   },
   number: {
     type: String,
     validate: {
       validator: function(v) {
-        return /\d{3}-\d{7}/.test(v);
+        return /\d{3}-\d{7}/.test(v)
       },
       message: props => `${props.value} is not a valid phone number!`
     },
@@ -32,11 +32,11 @@ const phonebookSchema = new mongoose.Schema({
 })
 
 phonebookSchema.set('toJSON', {
-    transform: (document, returnedObject) => {
-      returnedObject.id = returnedObject._id.toString()
-      delete returnedObject._id
-      delete returnedObject.__v
-    }
-  })
+  transform: (document, returnedObject) => {
+    returnedObject.id = returnedObject._id.toString()
+    delete returnedObject._id
+    delete returnedObject.__v
+  }
+})
 
 module.exports = mongoose.model('PhonebookEntry', phonebookSchema)
