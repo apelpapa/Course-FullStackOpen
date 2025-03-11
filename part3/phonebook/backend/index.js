@@ -76,7 +76,7 @@ app.delete("/api/persons/:id", (req, res) => {
 
 
 app.listen(PORT, (req, res) => {
-  console.log(`listening @ ${port}`);
+  console.log(`listening @ ${PORT}`);
 });
 
 const unknownEndpoint = (request, response) => {
