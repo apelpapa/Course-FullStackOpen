@@ -3,7 +3,7 @@ let persons = require("./db.json");
 let morgan = require('morgan')
 
 const app = express();
-const port = 3001;
+const PORT = process.env.PORT || 3001;
 
 app.use(express.json());
 
@@ -74,7 +74,8 @@ app.delete("/api/persons/:id", (req, res) => {
   }
 });
 
-app.listen(port, (req, res) => {
+
+app.listen(PORT, (req, res) => {
   console.log(`listening @ ${port}`);
 });
 
