@@ -8,7 +8,8 @@ const get = () =>{
 }
 
 const deletePerson = (deletionID) =>{
-    return axios.delete(`${baseURL}/${deletionID}`)
+    const request = axios.delete(`${baseURL}/${deletionID}`)
+    return request.then(response => response.data)
 }
 
 const post = (newObject) =>{

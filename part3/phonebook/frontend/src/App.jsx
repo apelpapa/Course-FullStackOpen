@@ -118,8 +118,8 @@ const App = () => {
     if (confirm(`Are you sure you want to delete: ${person.name}?`)) {
       personServer
         .deletePerson(person.id)
-        .then((response) => {
-          setMessage(`Deleted ${response.data.name} Successfully`);
+        .then(() => {
+          setMessage(`Deleted ${person.name} Successfully`);
           setTimeout(() => {
             setMessage(null);
           }, 5000);

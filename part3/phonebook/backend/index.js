@@ -31,6 +31,19 @@ app.get("/info", (req, res) => {
   );
 });
 
+app.put("/api/persons/:id", (req, res) => {
+  const personIndex = persons.findIndex(
+    (person) => person.id === req.params.id
+  );
+  const updatedPerson = {
+    id: persons[personIndex].id,
+    name: req.body.name,
+    number: req.body.number,
+  };
+    persons[personIndex] = updatedPerson
+    res.status(200).json(updatedPerson)
+});
+
 const randIDGen = () => {
   let randId = 1;
   let person = [];
@@ -67,9 +80,12 @@ app.delete("/api/persons/:id", (req, res) => {
   const personIndex = persons.findIndex(
     (person) => person.id === req.params.id
   );
+  
+  const nameStore = persons[personIndex].name
+  console.log(nameStore)
   if (personIndex != -1) {
     persons.splice(personIndex, 1);
-    res.status(204).end();
+    res.status(204).json({name: 'yoyo'});
   } else {
     res.status(404).end();
   }
