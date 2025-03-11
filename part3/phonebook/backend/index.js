@@ -1,7 +1,6 @@
 require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
-let persons = require("./db.json");
 let morgan = require("morgan");
 const PhonebookEntry = require("./models/phonebook");
 
@@ -20,34 +19,35 @@ app.use(
 );
 
 app.get("/api/persons", (req, res, next) => {
-  PhonebookEntry.find({}).then((result) => {
-    res.json(result);
-  })
-  .catch(error => next(error))
+  PhonebookEntry.find({})
+    .then((result) => {
+      res.json(result);
+    })
+    .catch((error) => next(error));
 });
 
 app.get("/api/persons/:id", (req, res, next) => {
   PhonebookEntry.findById(req.params.id)
     .then((result) => {
-      if(result){
+      if (result) {
         res.json(result);
-      } 
-      else {
-        res.status(404).json(`ID Doesn't Exist`)
+      } else {
+        res.status(404).json(`ID Doesn't Exist`);
       }
     })
     .catch((error) => next(error));
 });
 
 app.get("/info", (req, res, next) => {
-  PhonebookEntry.find({}).then((result) => {
-    res.send(
-      `<h1>The Phonebook Has Info For ${
-        result.length
-      } People </h1><p>As of: ${new Date()}</p>`
-    )
-  })
-  .catch (error => next(error))
+  PhonebookEntry.find({})
+    .then((result) => {
+      res.send(
+        `<h1>The Phonebook Has Info For ${
+          result.length
+        } People </h1><p>As of: ${new Date()}</p>`
+      );
+    })
+    .catch((error) => next(error));
 });
 
 app.put("/api/persons/:id", (req, res, next) => {
@@ -55,14 +55,14 @@ app.put("/api/persons/:id", (req, res, next) => {
     name: req.body.name,
     number: req.body.number,
   };
-  
-  PhonebookEntry.findByIdAndUpdate(req.params.id, updatedPerson, {new:true})
-  .then(result => {
-    if(result){
-      res.json(result)
-    }
-  })
-  .catch(error => next(error))
+
+  PhonebookEntry.findByIdAndUpdate(req.params.id, updatedPerson, { new: true, runValidators:true })
+    .then((result) => {
+      if (result) {
+        res.json(result);
+      }
+    })
+    .catch((error) => next(error));
 });
 
 app.post("/api/persons/", (req, res, next) => {
@@ -71,30 +71,20 @@ app.post("/api/persons/", (req, res, next) => {
     number: req.body.number,
   });
 
-  PhonebookEntry.find({ name: newPerson.name }).then((result) => {
-    if (newPerson.name.length === 0 || newPerson.number.length === 0) {
-      res.status(400).json({
-        error: "All Inputs Must Be Filled",
-      });
-    } else if (result.length > 0) {
-      res.status(400).json({
-        error: "Name Already Exists",
-      });
-    } else {
-      newPerson.save().then((savedPerson) => {
-        res.json(savedPerson);
-      })
-    }
-  })
-  .catch (error => next(error))
+  newPerson
+    .save()
+    .then((savedPerson) => {
+      res.json(savedPerson);
+    })
+    .catch((error) => next(error));
 });
 
 app.delete("/api/persons/:id", (req, res, next) => {
   PhonebookEntry.findByIdAndDelete(req.params.id)
-  .then(result =>{
-    res.status(204).end()
-  })
-  .catch(error => next(error))
+    .then((result) => {
+      res.status(204).end();
+    })
+    .catch((error) => next(error));
 });
 
 app.listen(PORT, (req, res) => {
@@ -108,10 +98,12 @@ const unknownEndpoint = (request, response) => {
 app.use(unknownEndpoint);
 
 const errorHandler = (error, request, response, next) => {
-  console.error(error.message);
+  //return console.error(`Message: | ${error.message} | Name: | ${error.name} |`);
 
   if (error.name === "CastError") {
-    return response.status(400).send({ error: "malformatted id" });
+    return response.status(400).send({ error: "Malformatted id" });
+  } else if (error.name === "ValidationError"){
+    return response.status(400).send({ error: error.message})
   }
 
   next(error);

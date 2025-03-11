@@ -95,8 +95,14 @@ const App = () => {
             persons.map((person) => {
               return person.name === response.name ? response : person;
             })
-          );
-        });
+          )
+        })
+        .catch (error => {
+          setMessage(`Error: ${error.response.data.error}`)
+          setTimeout(() => {
+            setMessage(null)
+          }, 3000);
+        })
       }
       return;
     }
@@ -111,7 +117,13 @@ const App = () => {
       setTimeout(() => {
         setMessage(null);
       }, 1500);
-    });
+    })
+    .catch(error =>{
+      setMessage(`Error: ${error.response.data.error}`)
+      setTimeout(() => {
+        setMessage(null)
+      }, 3000);
+    })
   };
 
   const handleDelete = (person) => {
