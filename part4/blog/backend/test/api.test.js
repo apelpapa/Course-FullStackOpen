@@ -47,7 +47,7 @@ describe('API Tests', () =>{
         assert.deepStrictEqual(response.body,helper.newBlogPost)
     })
 
-    test('Post With Blank Like Defaults to Zero', async () => {
+    test('Post With Blank Likes Defaults to Zero', async () => {
         const response = await api
             .post('/api/blogs')
             .send(helper.blogWithNoLikes)
