@@ -1,14 +1,7 @@
+const config = require('./utils/config')
 const mongoose = require('mongoose')
 
-if (process.argv.length < 3) {
-  console.log('give password as argument')
-  process.exit(1)
-}
-
-const password = process.argv[2]
-
-const url =
-  `mongodb+srv://fullstack:${password}@cluster0.o1opl.mongodb.net/noteApp?retryWrites=true&w=majority`
+const url = config.TEST_MONGODB_URI
 
 mongoose.set('strictQuery', false)
 mongoose.connect(url).then(() => {
@@ -19,11 +12,22 @@ mongoose.connect(url).then(() => {
 
   const Note = mongoose.model('Note', noteSchema)
 
-  Note.find({}).then(result => {
-    result.forEach(note => {
-      console.log(note)
-    })
-    mongoose.connection.close()
+  // Note.find({}).then(result => {
+  //   result.forEach(note => {
+  //     console.log(note)
+  //   })
+  //   mongoose.connection.close()
+  // })
+
+  const note = new Note ({
+    content: 'HTML is easy',
+    important: true
   })
+
+  note.save()
+    .then(result => {
+      console.log(`idk remember, but I got this back: ${result}`)
+      mongoose.connection.close()
+    })
 })
 
