@@ -1,0 +1,12 @@
+###
+GET http://localhost:3001/api/notes/
+
+###
+POST http://localhost:3001/api/notes/ HTTP/1.1
+content-type: application/json
+
+{
+    "content": "F* Your B*",
+    "important": true,
+    "userId": "67d37c142af8bae3b7646b08"
+}
