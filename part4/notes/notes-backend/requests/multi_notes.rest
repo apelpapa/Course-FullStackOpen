@@ -4,6 +4,7 @@ GET http://localhost:3001/api/notes/
 ###
 POST http://localhost:3001/api/notes/ HTTP/1.1
 content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IllveW9NY0dlZSIsImlkIjoiNjdkMzdjMTQyYWY4YmFlM2I3NjQ2YjA4IiwiaWF0IjoxNzQxOTk5NDI2fQ.LqltJ3HB9-Z8nRIoYDbedzSgVH1Ezv7xUESnqV7fcuE
 
 {
     "content": "F* Your B*",
