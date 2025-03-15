@@ -45,9 +45,9 @@ const updatedBlogInfo = {
 }
 
 const expectedUpdatedBlog = {
-  title: 'Blog Entry 1',
-  author: 'Blog Author 1',
-  url: 'Blog URL 1',
+  title: 'Blog Entry 3',
+  author: 'Blog Author 3',
+  url: 'Blog URL 3',
   likes: 500,
 }
 
