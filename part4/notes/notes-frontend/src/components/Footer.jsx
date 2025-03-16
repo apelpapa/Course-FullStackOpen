@@ -4,12 +4,11 @@ const Footer = () => {
     fontStyle: 'italic',
     fontSize: 16,
   }
-
   return (
     <div style={footerStyle}>
       <br />
       <em>
-        Note app, Department of Computer Science, University of Helsinki 2025
+        YoyoMcGees Note App  {new Date().getFullYear()}
       </em>
     </div>
   )

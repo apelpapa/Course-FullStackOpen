@@ -21,6 +21,7 @@ const PostBlogForm = (props) => {
         props.setMessage(null)
     }, 3000);
     props.setBlogs(props.blogs.concat(postedBlog))
+    props.postBlogRef.current.changeVisibility()
   };
 
   return (

@@ -1,22 +1,17 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Blog from "./components/Blog";
 import LoginForm from "./components/LoginForm";
 import blogService from "./services/blogs";
 import PostBlogForm from "./components/PostBlogForm";
-
-const MessageSystem = (props) => {
-  if (!props.message) return;
-  return props.message.startsWith("Error: ") ? (
-    <h2 className="errorMessage">{props.message}</h2>
-  ) : (
-    <h2 className="normalMessage">{props.message}</h2>
-  );
-};
+import MessageSystem from "./components/MessageSystem";
+import Toggleable from './components/Toggleable'
 
 const App = () => {
   const [blogs, setBlogs] = useState([]);
   const [user, setUser] = useState(null);
   const [message, setMessage] = useState(null);
+
+  const postBlogRef = useRef();
 
   useEffect(() => {
     blogService.getAll().then((blogs) => setBlogs(blogs));
@@ -48,7 +43,9 @@ const App = () => {
       <p>
         {user.name} is Logged in <button onClick={handleLogout}>Logout</button>
       </p>
-      <PostBlogForm user={user} blogs={blogs} setBlogs={setBlogs} setMessage={setMessage}/>
+      <Toggleable buttonLabel={'Add New Blog'} ref={postBlogRef}>
+        <PostBlogForm user={user} blogs={blogs} setBlogs={setBlogs} setMessage={setMessage} postBlogRef={postBlogRef}/>
+      </Toggleable>
       {blogs.map((blog) => (
         <Blog key={blog.id} blog={blog} />
       ))}
