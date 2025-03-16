@@ -14,7 +14,12 @@ const App = () => {
   const postBlogRef = useRef();
 
   useEffect(() => {
-    blogService.getAll().then((blogs) => setBlogs(blogs));
+    const getData = async () => {
+      const allBlogs = await blogService.getAll();
+      const sortedBlogs = allBlogs.sort((a, b) => b.likes - a.likes);
+      setBlogs(sortedBlogs);
+    };
+    getData()
   }, []);
 
   useEffect(() => {
@@ -61,7 +66,7 @@ const App = () => {
               buttonLabel={"View Details"}
               closeLabel={"Hide Details"}
             >
-              <Blog blog={blog} />
+              <Blog blogs={blogs} blog={blog} user={user} setBlogs={setBlogs} />
             </Toggleable>
           </div>
         );

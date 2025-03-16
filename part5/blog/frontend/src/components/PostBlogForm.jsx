@@ -12,8 +12,8 @@ const PostBlogForm = (props) => {
         title:title,
         author:author,
         url:url,
-        id: props.user.id
     }
+    
     const postedBlog = await blogService.postBlog(newBlogPost, props.user.token)
     console.log(postedBlog)
     props.setMessage(`Added Blog: ${postedBlog.title} - by: ${postedBlog.author}`)

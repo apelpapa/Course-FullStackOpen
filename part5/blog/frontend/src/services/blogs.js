@@ -18,4 +18,14 @@ const postBlog = async (newBlogPost, token) => {
   return response.data
 }
 
-export default { getAll, postBlog }
+const updateBlog = async (blogID, updatedBlogPost, token) => {
+  const response = await axios.put(`${baseUrl}/${blogID}`, updatedBlogPost, {headers: tokenHeader(token)})
+  return response.data
+}
+
+const  deleteBlog = async (blogID, token) => {
+  const response = await axios.delete(`${baseUrl}/${blogID}`, {headers: tokenHeader(token)})
+  return response.data
+}
+
+export default { getAll, postBlog, updateBlog, deleteBlog }
