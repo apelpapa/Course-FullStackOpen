@@ -1,0 +1,29 @@
+### Get All Users
+GET http://localhost:3001/api/users
+
+### Register User
+POST http://localhost:3001/api/users/ HTTP/1.1
+content-type: application/json
+
+{
+    "username": "test1",
+    "name": "Test Man",
+    "password": "test1"
+}
+### Valid Login
+POST http://localhost:3001/api/login/ HTTP/1.1
+content-type: application/json
+
+{
+    "username": "YoyoMcGee",
+    "password": "HashedPasswordsAreCool"
+}
+
+### Invalid Login
+POST http://localhost:3001/api/login/ HTTP/1.1
+content-type: application/json
+
+{
+    "username": "YoyoMcGee",
+    "password": "HashedPasswordsAreLame"
+}
