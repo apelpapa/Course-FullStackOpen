@@ -12,8 +12,8 @@ const LoginForm = (props) => {
     };
     const loggedUser = await loginService.login(userAttempt);
     if (!loggedUser) {
-      //props.setUser(null);
-      props.setMessage('Invalid Username and/or Password. Try Again')
+      props.setUser(null);
+      //props.setMessage('Invalid Username and/or Password. Try Again')
     } else {
       props.setUser(loggedUser);
       window.localStorage.setItem('loggedUser', JSON.stringify(loggedUser))
