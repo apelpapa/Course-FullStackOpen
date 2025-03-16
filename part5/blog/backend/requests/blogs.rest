@@ -26,7 +26,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Illve
 
 
 ### Update Blog by ID
-PUT http://localhost:3003/api/blogs/67d5023caca0ddd4d3143f9a HTTP/1.1
+PUT http://localhost:3003/api/blogs/67d66c989c39482e6fdc6cc0 HTTP/1.1
 content-type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QxIiwiaWQiOiI2N2Q2MGMxYTU2YTVjOGFkYTFhODcwNWYiLCJpYXQiOjE3NDIxMDY0ODAsImV4cCI6MTc0MjExMDA4MH0.hS_VsQDqEHPre-VoaJ2aDtTjF7Tn451v9jcI3zOI4qk
 

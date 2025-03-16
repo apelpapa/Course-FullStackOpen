@@ -9,16 +9,16 @@ const Blog = (props) => {
       likes: props.blog.likes + 1, // Increment by 1
       url: props.blog.url
     }
-    
+
     try {
       const updatedBlog = await blogService.updateBlog(
-        props.blog.id, 
-        blogPostUpdate, 
+        props.blog.id,
+        blogPostUpdate,
         props.user.token
       )
 
-      props.setBlogs(prevBlogs => 
-        prevBlogs.map(blog => 
+      props.setBlogs(prevBlogs =>
+        prevBlogs.map(blog =>
           blog.id !== updatedBlog.id ? blog : updatedBlog
         )
       )
@@ -34,14 +34,14 @@ const Blog = (props) => {
     }
     try {
       const deletedBlog = await blogService.deleteBlog(props.blog.id, props.user.token)
-      props.setBlogs(prevBlogs =>{
+      props.setBlogs(prevBlogs => {
         return prevBlogs.filter(blog => blog.id !== deletedBlog.id)
       })
     } catch (error) {
       console.error('Error Deleting The Blog:', error)
     }
   }
-  
+
   return(
     <div>
       <ul>
@@ -52,7 +52,7 @@ const Blog = (props) => {
         <li><strong>User: </strong>{props.blog.user.name}</li>
       </ul>
       <button className="deleteButton" onClick={deleteHandler}>Delete</button>
-    </div>  
+    </div>
   )
 }
 

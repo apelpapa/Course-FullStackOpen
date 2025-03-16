@@ -1,23 +1,27 @@
-import loginService from "../services/login";
-import { useState } from "react";
+import loginService from '../services/login'
+import { useState } from 'react'
+import PropTypes from 'prop-types'
 
 const LoginForm = (props) => {
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
+
   const handleLogin = async (event) => {
-    event.preventDefault();
+    event.preventDefault()
     const userAttempt = {
       username: username,
       password: password,
-    };
-    const loggedUser = await loginService.login(userAttempt);
+    }
+    const loggedUser = await loginService.login(userAttempt)
     props.setUser(loggedUser)
-    !loggedUser ? props.setMessage('Error: Invalid Username and/or Password. Try Again') : props.setMessage(null)
+    !loggedUser
+      ? props.setMessage('Error: Invalid Username and/or Password. Try Again')
+      : props.setMessage(null)
     setTimeout(() => {
-        props.setMessage(null)
-    }, 3000);
+      props.setMessage(null)
+    }, 3000)
     window.localStorage.setItem('loggedUser', JSON.stringify(loggedUser))
-  };
+  }
 
   return (
     <form onSubmit={handleLogin}>
@@ -42,7 +46,12 @@ const LoginForm = (props) => {
       </div>
       <button type="submit">Log In</button>
     </form>
-  );
-};
+  )
+}
 
-export default LoginForm;
+LoginForm.propTypes = {
+  setUser: PropTypes.func.isRequired,
+  setMessage: PropTypes.func.isRequired
+}
+
+export default LoginForm
