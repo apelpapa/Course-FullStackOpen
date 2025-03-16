@@ -16,8 +16,8 @@ const Toggleable = forwardRef((props, refs) => {
 if(visible){
   return (
   <>
+    <button style={{marginBottom:5}} onClick={changeVisibility}>{props.closeLabel || 'Cancel'}</button>
     {props.children}
-    <button style={{marginBottom:5}} onClick={changeVisibility}>Cancel</button>
   </>
   )
 }

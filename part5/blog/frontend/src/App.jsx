@@ -4,7 +4,7 @@ import LoginForm from "./components/LoginForm";
 import blogService from "./services/blogs";
 import PostBlogForm from "./components/PostBlogForm";
 import MessageSystem from "./components/MessageSystem";
-import Toggleable from './components/Toggleable'
+import Toggleable from "./components/Toggleable";
 
 const App = () => {
   const [blogs, setBlogs] = useState([]);
@@ -31,10 +31,10 @@ const App = () => {
   if (!user) {
     return (
       <div>
-    <MessageSystem message={message} />
-    <LoginForm setUser={setUser} user={user} setMessage={setMessage}/>
-    </div>
-  )
+        <MessageSystem message={message} />
+        <LoginForm setUser={setUser} user={user} setMessage={setMessage} />
+      </div>
+    );
   }
   return (
     <div>
@@ -43,12 +43,29 @@ const App = () => {
       <p>
         {user.name} is Logged in <button onClick={handleLogout}>Logout</button>
       </p>
-      <Toggleable buttonLabel={'Add New Blog'} ref={postBlogRef}>
-        <PostBlogForm user={user} blogs={blogs} setBlogs={setBlogs} setMessage={setMessage} postBlogRef={postBlogRef}/>
+      <Toggleable buttonLabel={"Add New Blog"} ref={postBlogRef}>
+        <PostBlogForm
+          user={user}
+          blogs={blogs}
+          setBlogs={setBlogs}
+          setMessage={setMessage}
+          postBlogRef={postBlogRef}
+        />
       </Toggleable>
-      {blogs.map((blog) => (
-        <Blog key={blog.id} blog={blog} />
-      ))}
+
+      {blogs.map((blog) => {
+        return (
+          <div className="blogContainer" key={blog.id}>
+            <strong>Title: </strong> {blog.title}
+            <Toggleable
+              buttonLabel={"View Details"}
+              closeLabel={"Hide Details"}
+            >
+              <Blog blog={blog} />
+            </Toggleable>
+          </div>
+        );
+      })}
     </div>
   );
 };
