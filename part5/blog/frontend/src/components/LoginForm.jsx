@@ -1,15 +1,19 @@
 import loginService from "../services/login";
+import { useState } from "react";
 
 const LoginForm = (props) => {
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
   const handleLogin = async (event) => {
     event.preventDefault();
     const userAttempt = {
-      username: props.username,
-      password: props.password,
+      username: username,
+      password: password,
     };
     const loggedUser = await loginService.login(userAttempt);
     if (!loggedUser) {
-      props.setUser(null);
+      //props.setUser(null);
+      props.setMessage('Invalid Username and/or Password. Try Again')
     } else {
       props.setUser(loggedUser);
       window.localStorage.setItem('loggedUser', JSON.stringify(loggedUser))
@@ -24,8 +28,8 @@ const LoginForm = (props) => {
         <input
           type="text"
           id="usernameInput"
-          onChange={({ target }) => props.setUsername(target.value)}
-          value={props.username}
+          onChange={({ target }) => setUsername(target.value)}
+          value={username}
         />
       </div>
       <div>
@@ -33,8 +37,8 @@ const LoginForm = (props) => {
         <input
           type="text"
           id="passwordInput"
-          onChange={({ target }) => props.setPassword(target.value)}
-          value={props.password}
+          onChange={({ target }) => setPassword(target.value)}
+          value={password}
         />
       </div>
       <button type="submit">Log In</button>

@@ -8,6 +8,7 @@ const login = async (userAttempt) => {
     return response.data;
   } catch {
     console.log("Login Failed");
+    return null
   }
 };
 
