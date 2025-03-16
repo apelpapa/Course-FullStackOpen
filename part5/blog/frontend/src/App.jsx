@@ -34,7 +34,12 @@ const App = () => {
   };
 
   if (!user) {
-    return <LoginForm setUser={setUser} user={user} setMessage={setMessage}/>;
+    return (
+      <div>
+    <MessageSystem message={message} />
+    <LoginForm setUser={setUser} user={user} setMessage={setMessage}/>
+    </div>
+  )
   }
   return (
     <div>

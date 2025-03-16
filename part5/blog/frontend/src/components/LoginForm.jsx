@@ -11,13 +11,12 @@ const LoginForm = (props) => {
       password: password,
     };
     const loggedUser = await loginService.login(userAttempt);
-    if (!loggedUser) {
-      props.setUser(null);
-      //props.setMessage('Invalid Username and/or Password. Try Again')
-    } else {
-      props.setUser(loggedUser);
-      window.localStorage.setItem('loggedUser', JSON.stringify(loggedUser))
-    }
+    props.setUser(loggedUser)
+    !loggedUser ? props.setMessage('Error: Invalid Username and/or Password. Try Again') : props.setMessage(null)
+    setTimeout(() => {
+        props.setMessage(null)
+    }, 3000);
+    window.localStorage.setItem('loggedUser', JSON.stringify(loggedUser))
   };
 
   return (
