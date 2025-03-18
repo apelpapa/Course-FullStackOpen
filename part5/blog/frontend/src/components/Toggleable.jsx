@@ -33,7 +33,8 @@ Toggleable.displayName = 'Toggleable'
 
 Toggleable.propTypes = {
     buttonLabel: PropTypes.string.isRequired,
-    closeLabel: PropTypes.string.isRequired
+    closeLabel: PropTypes.string.isRequired,
+    children: PropTypes.node
 }
 
 export default Toggleable;

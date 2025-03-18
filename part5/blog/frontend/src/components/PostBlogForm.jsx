@@ -1,5 +1,6 @@
 import blogService from "../services/blogs";
 import { useState } from "react";
+import PropTypes from "prop-types";
 
 const PostBlogForm = (props) => {
     const [title, setTitle] = useState('')
@@ -44,6 +45,19 @@ const PostBlogForm = (props) => {
       </form>
     </div>
   );
+};
+PostBlogForm.propTypes = {
+  user: PropTypes.shape({
+    token: PropTypes.string.isRequired,
+  }).isRequired,
+  setMessage: PropTypes.func.isRequired,
+  setBlogs: PropTypes.func.isRequired,
+  blogs: PropTypes.array.isRequired,
+  postBlogRef: PropTypes.shape({
+    current: PropTypes.shape({
+      changeVisibility: PropTypes.func.isRequired,
+    }),
+  }).isRequired,
 };
 
 export default PostBlogForm;

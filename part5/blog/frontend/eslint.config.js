@@ -1,19 +1,10 @@
-import { defineConfig } from "eslint/config";
-import js from "@eslint/js";
+import globals from "globals";
+import pluginReact from "eslint-plugin-react";
 
-export default defineConfig([
-  {
-    extends: ["js/recommended"],
-    languageOptions: {
-      globals: {
-        console: "readonly",
-      },
-    },
-    plugins: {
-      js,
-    },
-    rules: {
-      "no-unused-vars": "warn",
-    },
-  },
-]);
+/** @type {import('eslint').Linter.Config[]} */
+export default [
+  { files: ["**/*.{js,mjs,cjs,jsx}"] },
+  { languageOptions: { globals: globals.browser } },
+  pluginReact.configs.flat.recommended,
+  pluginReact.configs.flat["jsx-runtime"],
+];

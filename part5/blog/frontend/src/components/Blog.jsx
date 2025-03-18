@@ -1,4 +1,5 @@
 import blogService from '../services/blogs'
+import PropTypes from 'prop-types'
 
 const Blog = (props) => {
   const likeHandler = async (event) => {
@@ -54,6 +55,22 @@ const Blog = (props) => {
       <button className="deleteButton" onClick={deleteHandler}>Delete</button>
     </div>
   )
+}
+Blog.propTypes = {
+  blog: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    author: PropTypes.string.isRequired,
+    likes: PropTypes.number.isRequired,
+    url: PropTypes.string.isRequired,
+    user: PropTypes.shape({
+      name: PropTypes.string.isRequired
+    }).isRequired
+  }).isRequired,
+  user: PropTypes.shape({
+    token: PropTypes.string.isRequired
+  }).isRequired,
+  setBlogs: PropTypes.func.isRequired
 }
 
 export default Blog

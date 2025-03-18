@@ -36,4 +36,22 @@ export default [
       'react/prop-types': 0,
     },
   },
+
+  {
+    files: ['**/*.{test,spec}.{js,jsx}'],
+    languageOptions: {
+      globals: {
+        ...globals.browser,
+        describe: true,
+        it: true,
+        expect: true,
+        beforeAll: true,
+        afterAll: true,
+        beforeEach: true,
+        test: true,
+        afterEach: true,
+        vi: true,
+      },
+    },
+  },
 ]
