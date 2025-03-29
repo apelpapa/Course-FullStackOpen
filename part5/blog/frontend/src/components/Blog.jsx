@@ -26,8 +26,8 @@ const Blog = (props) => {
       );
     } catch (error) {
       props.setBlogs((prevBlogs) => {
-        prevBlogs.map(blog => blog)
-      })
+        prevBlogs.map((blog) => blog);
+      });
       console.error("Error Updating The Blog:", error);
     }
   };
@@ -54,7 +54,8 @@ const Blog = (props) => {
 
   return (
     <div>
-      <strong>Title: </strong> {props.blog.title} <strong>By </strong> {`${props.blog.author} `}
+      <strong>Title: </strong> {props.blog.title} <strong>By </strong>{" "}
+      {`${props.blog.author} `}
       <Toggleable buttonLabel={"View Details"} closeLabel={"Hide Details"}>
         <ul>
           <li>
@@ -78,10 +79,11 @@ const Blog = (props) => {
             {props.blog.user.name}
           </li>
         </ul>
-
-        <button className="deleteButton" onClick={deleteHandler}>
-          Delete
-        </button>
+        {props.blog.user.username === props.user.username? (
+          <button className="deleteButton" onClick={deleteHandler}>
+            Delete
+          </button>
+        ) : null}
       </Toggleable>
     </div>
   );
@@ -93,12 +95,18 @@ Blog.propTypes = {
     author: PropTypes.string.isRequired,
     likes: PropTypes.number.isRequired,
     url: PropTypes.string.isRequired,
-    user: PropTypes.shape({
-      name: PropTypes.string.isRequired,
-    }).isRequired,
+    user: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.shape({
+        name: PropTypes.string,
+        username: PropTypes.string,
+      })
+    ]).isRequired,
   }).isRequired,
   user: PropTypes.shape({
+    name: PropTypes.string.isRequired,
     token: PropTypes.string.isRequired,
+    username: PropTypes.string.isRequired
   }).isRequired,
   setBlogs: PropTypes.func.isRequired,
 };
