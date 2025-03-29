@@ -25,6 +25,9 @@ const Blog = (props) => {
         )
       );
     } catch (error) {
+      props.setBlogs((prevBlogs) => {
+        prevBlogs.map(blog => blog)
+      })
       console.error("Error Updating The Blog:", error);
     }
   };

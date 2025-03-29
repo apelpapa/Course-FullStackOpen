@@ -39,8 +39,33 @@ describe("Blog Display Tests", () => {
     screen.getByText("99", { exact: false });
     screen.getByText("www.testurl.com", { exact: false });
   });
+});
 
-  test("Like Button Clicked Twice", () => {
+test("Like Button Clicked Twice", async () => {
+    const mockLike = vi.fn()
 
-  });
+  const { container } = render(
+    <Blog
+      blog={{
+        id:'123',
+        title: "Test Title 1",
+        author: "Test Author 1",
+        likes: 99,
+        url: "www.testurl.com",
+        user: { name: "Test User 1" },
+      }} 
+      user={{token: 'Test-Token'}}
+      setBlogs={mockLike}
+    />
+  );
+  
+  const user = userEvent.setup();
+  const viewButton = screen.getByText("View Details", { exact: false });
+  await user.click(viewButton);
+
+  const likeButton = screen.getByRole('button', {name: /like/i})
+  await user.click(likeButton)
+  await user.click(likeButton)
+
+  expect(mockLike.mock.calls).toHaveLength(2)
 });
