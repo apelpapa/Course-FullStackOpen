@@ -4,10 +4,9 @@ import userEvent from "@testing-library/user-event";
 import Blog from "./Blog";
 
 describe("Blog Display Tests", () => {
-  let container;
 
   beforeEach(() => {
-    container = render(
+    render(
       <Blog
         blog={{
           title: "Test Title 1",

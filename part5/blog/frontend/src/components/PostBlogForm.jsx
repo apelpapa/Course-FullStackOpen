@@ -14,7 +14,7 @@ const PostBlogForm = (props) => {
         author:author,
         url:url,
     }
-    
+    try{
     const postedBlog = await blogService.postBlog(newBlogPost, props.user.token)
     console.log(postedBlog)
     props.setMessage(`Added Blog: ${postedBlog.title} - by: ${postedBlog.author}`)
@@ -23,6 +23,10 @@ const PostBlogForm = (props) => {
     }, 3000);
     props.setBlogs(props.blogs.concat(postedBlog))
     props.postBlogRef.current.changeVisibility()
+  } catch (error){
+    
+    console.error('Error Posting Blog', error)
+  }
   };
 
   return (
