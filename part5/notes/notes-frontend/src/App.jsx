@@ -5,7 +5,7 @@ import Notification from "./components/Notification";
 import noteService from "./services/notes";
 import loginService from "./services/login";
 import LoginForm from "./components/LoginForm";
-import Togglable from "./components/Togglable";
+import Toggleable from "./components/Toggleable";
 import NoteForm from "./components/NoteForm";
 
 const App = () => {
@@ -41,9 +41,9 @@ const App = () => {
   };
 
   const noteForm = () => (
-    <Togglable buttonLabel="new note" ref={noteFormRef}>
+    <Toggleable buttonLabel="new note" ref={noteFormRef}>
       <NoteForm createNote={addNote} />
-    </Togglable>
+    </Toggleable>
   );
 
   const toggleImportanceOf = (id) => {
@@ -100,7 +100,7 @@ const App = () => {
 
       {user === null ? (
         <>
-          <Togglable buttonLabel="login">
+          <Toggleable buttonLabel="login">
             <LoginForm
               username={username}
               password={password}
@@ -108,7 +108,7 @@ const App = () => {
               handlePasswordChange={({ target }) => setPassword(target.value)}
               handleSubmit={handleLogin}
             />
-          </Togglable>
+          </Toggleable>
         </>
       ) : (
         <div>

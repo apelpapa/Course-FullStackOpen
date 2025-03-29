@@ -61,13 +61,7 @@ const App = () => {
       {blogs.map((blog) => {
         return (
           <div className="blogContainer" key={blog.id}>
-            <strong>Title: </strong> {blog.title}
-            <Toggleable
-              buttonLabel={'View Details'}
-              closeLabel={'Hide Details'}
-            >
-              <Blog blogs={blogs} blog={blog} user={user} setBlogs={setBlogs} />
-            </Toggleable>
+              <Blog blog={blog} user={user} setBlogs={setBlogs} />
           </div>
         )
       })}
