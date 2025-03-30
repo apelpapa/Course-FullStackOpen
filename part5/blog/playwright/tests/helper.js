@@ -14,7 +14,12 @@ const addNewBlog = async (page, title, author, url) => {
 };
 
 const likePost = async (page, postPosition, numberLikes) => {
-    await page.getByRole('button', { name: 'View Details' }).nth(postPosition)
+    await page.getByRole('button', { name: 'View Details' }).nth(postPosition).click()
+    for(let i=0; i< numberLikes; i++){
+      await page.getByRole('button', { name: 'Like' }).click()
+      await page.getByText(`Likes: ${i+1} Like`).waitFor()
+    }
+    await page.getByRole('button', { name: 'Hide Details' }).click()
 }
 
 export { attemptLogin, addNewBlog, likePost };
