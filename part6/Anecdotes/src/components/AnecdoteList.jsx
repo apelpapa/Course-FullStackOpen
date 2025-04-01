@@ -3,11 +3,13 @@ import { castVote } from "../reducers/anecdoteReducer";
 import { removeMessage, showMessage } from "../reducers/notificationReducer";
 
 const AnecdoteList = () => {
-  const anecdotes = useSelector((state) => {
-    return state.anecdotes.filter((anecdote) =>
-      anecdote.content.toLowerCase().includes(state.filter.toLowerCase())
-    );
-  });
+  const anecdotes = useSelector((state) =>
+    state.filter === ""
+      ? state.anecdotes
+      : state.anecdotes.filter((anecdote) =>
+          anecdote.content.toLowerCase().includes(state.filter.toLowerCase())
+        )
+  );
   const dispatch = useDispatch();
   const vote = (anecdote) => {
     dispatch(castVote(anecdote.id));
@@ -21,6 +23,7 @@ const AnecdoteList = () => {
     <>
       {sortedAnecdotes.map((anecdote) => (
         <div key={anecdote.id}>
+          {/* {console.log(anecdote)} */}
           <div>{anecdote.content}</div>
           <div>
             has {anecdote.votes}
