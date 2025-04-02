@@ -21,6 +21,7 @@ export const postAnecdote = async (content) => {
     return response.data
   } catch (error) {
     console.error(`Couldn't Post The New Anecdote`, error);
+    throw error
   }
 };
 

@@ -4,22 +4,32 @@ import { useContext } from "react";
 import NotificationContext from "../NotificationContext";
 
 const AnecdoteForm = () => {
-  const [notification, notificationDispatch] = useContext(NotificationContext)
+  const [notification, notificationDispatch] = useContext(NotificationContext);
 
   const queryClient = useQueryClient();
   const newAnecdoteMutation = useMutation({
     mutationFn: postAnecdote,
-    onSuccess: (newAnecdote) => {
-      const anecdotes = queryClient.getQueryData(["anecdotes"]);
-      queryClient.setQueryData(["anecdotes"], anecdotes.concat(newAnecdote));
-      notificationDispatch({type:'DISPLAY', payload:`You Added Anecdote: ${newAnecdote.content}`})
+    onError: (error) => {
+      notificationDispatch({
+        type: "DISPLAY",
+        payload: `Error: ${error}. This might be because the anecdote is too short (minimum 5 characters required).`,
+      });
       setTimeout(() => {
-        notificationDispatch({type:'CLEAR'})
+        notificationDispatch({ type: "CLEAR" });
       }, 5000);
     },
-    onError: () => {
-      console.log('error')
-    }
+    onSuccess: (newAnecdote) => {
+        const anecdotes = queryClient.getQueryData(["anecdotes"]);
+        console.log(`dat`);
+        queryClient.setQueryData(["anecdotes"], anecdotes.concat(newAnecdote));
+        notificationDispatch({
+          type: "DISPLAY",
+          payload: `You Added Anecdote: ${newAnecdote.content}`,
+        });
+        setTimeout(() => {
+          notificationDispatch({ type: "CLEAR" });
+        }, 5000);
+    },
   });
 
   const onCreate = (event) => {
