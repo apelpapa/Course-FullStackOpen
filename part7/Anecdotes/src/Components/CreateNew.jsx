@@ -1,49 +1,30 @@
-import { useState } from "react";
+import InputField from "./InputField";
 
 const CreateNew = (props) => {
-    const [content, setContent] = useState("");
-    const [author, setAuthor] = useState("");
-    const [info, setInfo] = useState("");
   
     const handleSubmit = (e) => {
       e.preventDefault();
       props.addNew({
-        content,
-        author,
-        info,
+        content: e.target.content.value,
+        author: e.target.author.value,
+        info: e.target.info.value,
         votes: 0,
       });
     };
+
+    const clear = (e) => {
+      e.preventDefault()
+    }
   
     return (
       <div>
         <h2>Create a New Anecdote</h2>
         <form onSubmit={handleSubmit}>
-          <div>
-            Content
-            <input
-              name="content"
-              value={content}
-              onChange={(e) => setContent(e.target.value)}
-            />
-          </div>
-          <div>
-            Author
-            <input
-              name="author"
-              value={author}
-              onChange={(e) => setAuthor(e.target.value)}
-            />
-          </div>
-          <div>
-            Url For More Info
-            <input
-              name="info"
-              value={info}
-              onChange={(e) => setInfo(e.target.value)}
-            />
-          </div>
-          <button>Create</button>
+          <InputField name='content' type='text' />
+          <InputField name='author' type='text' />
+          <InputField name='info' type='text' />
+          <button type="submit">Create</button>
+          <button type="reset">Clear</button>
         </form>
       </div>
     );
