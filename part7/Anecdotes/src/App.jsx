@@ -5,17 +5,7 @@ import AnecdoteList from "./Components/AnecdoteList";
 import Footer from "./Components/Footer";
 import About from "./Components/About";
 import CreateNew from "./Components/CreateNew";
-
-const Anecdote = ({ anecdote }) => {
-  console.log(anecdote)
-  return(
-    <div>
-      <h2>{anecdote.content}</h2>
-      <p>Has {anecdote.votes} Votes</p>
-      <p>For More Information, Go To: <a href={anecdote.info}>{anecdote.info}</a></p>
-    </div>
-  )
-}
+import Anecdote from "./Components/Anecdote";
 
 const Notification = ({ notification }) =>{
   return <p>{notification}</p>
