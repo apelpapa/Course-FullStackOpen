@@ -1,0 +1,25 @@
+.normalMessage {
+  color: green;
+  background-color: lightgray;
+  border: 3px solid;
+  border-radius: 5px;
+}
+
+.errorMessage {
+  color: red;
+  background-color: lightgray;
+  border: 3px solid;
+  border-radius: 5px;
+}
+
+.blogContainer {
+  padding-top: 10px;
+  padding-left: 2px;
+  border: 1px solid;
+  margin: 5px;
+}
+
+.deleteButton {
+  color: red;
+  margin-bottom: 5px;
+}
