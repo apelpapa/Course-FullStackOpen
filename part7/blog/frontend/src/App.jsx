@@ -65,7 +65,12 @@ const App = () => {
       {blogs.map((blog) => {
         return (
           <div className="blogContainer" key={blog.id}>
-            <Blog blog={blog} user={user} setBlogs={setBlogs} />
+            <Blog
+              blog={blog}
+              user={user}
+              setBlogs={setBlogs}
+              setMessage={setMessage}
+            />
           </div>
         );
       })}

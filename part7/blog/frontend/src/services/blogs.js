@@ -40,4 +40,16 @@ const deleteBlog = async (blogID, token) => {
   return response.data;
 };
 
-export default { getAll, postBlog, updateBlog, deleteBlog };
+const likeBlog = async (blogID, token) => {
+  console.log(`${baseUrl}/${blogID}/like`)
+  const response = await axios.put(
+    `${baseUrl}/${blogID}/like`,
+    {},
+    {
+      headers: tokenHeader(token),
+    },
+  );
+  return response.data;
+};
+
+export default { getAll, postBlog, updateBlog, deleteBlog, likeBlog };

@@ -5,17 +5,10 @@ import Toggleable from "./Toggleable";
 const Blog = (props) => {
   const likeHandler = async (event) => {
     event.preventDefault();
-    const blogPostUpdate = {
-      title: props.blog.title,
-      author: props.blog.author,
-      likes: props.blog.likes + 1, // Increment by 1
-      url: props.blog.url,
-    };
-
+    
     try {
-      const updatedBlog = await blogService.updateBlog(
+      const updatedBlog = await blogService.likeBlog(
         props.blog.id,
-        blogPostUpdate,
         props.user.token,
       );
 
@@ -24,11 +17,21 @@ const Blog = (props) => {
           blog.id !== updatedBlog.id ? blog : updatedBlog,
         ),
       );
+      
+      if (props.setMessage) {
+        props.setMessage(`You liked "${updatedBlog.title}" by ${updatedBlog.author}`);
+        setTimeout(() => {
+          props.setMessage(null);
+        }, 3000);
+      }
     } catch (error) {
-      props.setBlogs((prevBlogs) => {
-        prevBlogs.map((blog) => blog);
-      });
-      console.error("Error Updating The Blog:", error);
+      console.error("Error liking the blog:", error);
+      if (props.setMessage) {
+        props.setMessage(`Error: Failed to like the post`);
+        setTimeout(() => {
+          props.setMessage(null);
+        }, 3000);
+      }
     }
   };
 
@@ -109,6 +112,7 @@ Blog.propTypes = {
     username: PropTypes.string.isRequired,
   }).isRequired,
   setBlogs: PropTypes.func.isRequired,
+  setMessage: PropTypes.func, // Added optional prop for feedback messages
 };
 
 export default Blog;
