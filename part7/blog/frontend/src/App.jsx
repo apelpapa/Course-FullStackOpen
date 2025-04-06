@@ -1,3 +1,5 @@
+//Add Sorting Back
+
 import { useState, useEffect, useRef } from "react";
 import Blog from "./components/Blog";
 import LoginForm from "./components/LoginForm";
@@ -5,16 +7,19 @@ import blogService from "./services/blogs";
 import PostBlogForm from "./components/PostBlogForm";
 import MessageSystem from "./components/MessageSystem";
 import Toggleable from "./components/Toggleable";
+import { initializeBlogs } from './reducers/blogReducer'
+import { useDispatch } from 'react-redux'
 
 const App = () => {
+  const dispatch = useDispatch()
   const [blogs, setBlogs] = useState([]);
   const [user, setUser] = useState(null);
-  const [message, setMessage] = useState(null);
 
   const postBlogRef = useRef();
 
   useEffect(() => {
     const getData = async () => {
+      dispatch(initializeBlogs())
       const allBlogs = await blogService.getAll();
       const sortedBlogs = allBlogs.sort((a, b) => b.likes - a.likes);
       setBlogs(sortedBlogs);
@@ -36,15 +41,15 @@ const App = () => {
   if (!user) {
     return (
       <div>
-        <MessageSystem message={message} />
-        <LoginForm setUser={setUser} user={user} setMessage={setMessage} />
+        <MessageSystem />
+        <LoginForm setUser={setUser} user={user} />
       </div>
     );
   }
   return (
     <div>
       <h2>BlogMania</h2>
-      <MessageSystem message={message} />
+      <MessageSystem />
       <p>
         {user.name} is Logged in <button onClick={handleLogout}>Logout</button>
       </p>
@@ -57,7 +62,6 @@ const App = () => {
           user={user}
           blogs={blogs}
           setBlogs={setBlogs}
-          setMessage={setMessage}
           postBlogRef={postBlogRef}
         />
       </Toggleable>
@@ -69,7 +73,6 @@ const App = () => {
               blog={blog}
               user={user}
               setBlogs={setBlogs}
-              setMessage={setMessage}
             />
           </div>
         );

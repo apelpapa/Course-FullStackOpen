@@ -1,8 +1,10 @@
 import loginService from "../services/login";
 import { useState } from "react";
-import PropTypes from "prop-types";
+import { clearMessage, showMessage } from "../reducers/notificationReducer";
+import { useDispatch } from "react-redux";
 
 const LoginForm = (props) => {
+  const dispatch = useDispatch()
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -15,10 +17,10 @@ const LoginForm = (props) => {
     const loggedUser = await loginService.login(userAttempt);
     props.setUser(loggedUser);
     !loggedUser
-      ? props.setMessage("Error: Invalid Username and/or Password. Try Again")
-      : props.setMessage(null);
+      ? dispatch(showMessage("Error: Invalid Username and/or Password. Try Again"))
+      : dispatch(clearMessage());
     setTimeout(() => {
-      props.setMessage(null);
+      dispatch(clearMessage());
     }, 3000);
     window.localStorage.setItem("loggedUser", JSON.stringify(loggedUser));
   };
@@ -47,11 +49,6 @@ const LoginForm = (props) => {
       <button type="submit">Log In</button>
     </form>
   );
-};
-
-LoginForm.propTypes = {
-  setUser: PropTypes.func.isRequired,
-  setMessage: PropTypes.func.isRequired,
 };
 
 export default LoginForm;

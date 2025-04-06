@@ -1,16 +1,14 @@
-import PropTypes from "prop-types";
+import { useSelector } from "react-redux";
 
-const MessageSystem = (props) => {
-  if (!props.message) return null;
-  return props.message.startsWith("Error: ") ? (
-    <h2 className="errorMessage">{props.message}</h2>
+const MessageSystem = () => {
+  const notification = useSelector((state) => state.notification);
+
+  if (!notification) return null;
+  
+  return notification.startsWith("Error: ") ? (
+    <h2 className="errorMessage">{notification}</h2>
   ) : (
-    <h2 className="normalMessage">{props.message}</h2>
+    <h2 className="normalMessage">{notification}</h2>
   );
 };
-
-MessageSystem.propTypes = {
-  message: PropTypes.string,
-};
-
 export default MessageSystem;

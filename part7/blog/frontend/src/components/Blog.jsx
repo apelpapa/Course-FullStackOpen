@@ -1,11 +1,14 @@
 import blogService from "../services/blogs";
 import PropTypes from "prop-types";
 import Toggleable from "./Toggleable";
+import { useDispatch } from "react-redux";
+import { showMessage, clearMessage } from "../reducers/notificationReducer";
 
 const Blog = (props) => {
+  const dispatch = useDispatch();
   const likeHandler = async (event) => {
     event.preventDefault();
-    
+
     try {
       const updatedBlog = await blogService.likeBlog(
         props.blog.id,
@@ -17,21 +20,22 @@ const Blog = (props) => {
           blog.id !== updatedBlog.id ? blog : updatedBlog,
         ),
       );
-      
-      if (props.setMessage) {
-        props.setMessage(`You liked "${updatedBlog.title}" by ${updatedBlog.author}`);
-        setTimeout(() => {
-          props.setMessage(null);
-        }, 3000);
-      }
+      dispatch(
+        showMessage(
+          `You liked "${updatedBlog.title}" by ${updatedBlog.author}`,
+        ),
+      );
+      setTimeout(() => {
+        dispatch(clearMessage());
+      }, 3000);
     } catch (error) {
       console.error("Error liking the blog:", error);
-      if (props.setMessage) {
-        props.setMessage(`Error: Failed to like the post`);
+
+        dispatch(showMessage(`Error: Failed to like the post`));
         setTimeout(() => {
-          props.setMessage(null);
+          dispatch(clearMessage());
         }, 3000);
-      }
+      
     }
   };
 
@@ -90,29 +94,6 @@ const Blog = (props) => {
       </Toggleable>
     </div>
   );
-};
-Blog.propTypes = {
-  blog: PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired,
-    author: PropTypes.string.isRequired,
-    likes: PropTypes.number.isRequired,
-    url: PropTypes.string.isRequired,
-    user: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.shape({
-        name: PropTypes.string,
-        username: PropTypes.string,
-      }),
-    ]).isRequired,
-  }).isRequired,
-  user: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    token: PropTypes.string.isRequired,
-    username: PropTypes.string.isRequired,
-  }).isRequired,
-  setBlogs: PropTypes.func.isRequired,
-  setMessage: PropTypes.func, // Added optional prop for feedback messages
 };
 
 export default Blog;

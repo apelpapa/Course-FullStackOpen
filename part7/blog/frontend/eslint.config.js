@@ -7,4 +7,10 @@ export default [
   { languageOptions: { globals: globals.browser } },
   pluginReact.configs.flat.recommended,
   pluginReact.configs.flat["jsx-runtime"],
+  {
+    rules: {
+      // Disable prop-types checking
+      "react/prop-types": "off",
+    },
+  },
 ];

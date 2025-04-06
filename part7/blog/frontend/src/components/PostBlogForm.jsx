@@ -1,8 +1,10 @@
+import { useDispatch } from "react-redux";
 import blogService from "../services/blogs";
 import { useState } from "react";
-import PropTypes from "prop-types";
+import { clearMessage, showMessage } from "../reducers/notificationReducer";
 
 const PostBlogForm = (props) => {
+  const dispatch = useDispatch();
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [url, setURL] = useState("");
@@ -19,11 +21,13 @@ const PostBlogForm = (props) => {
         newBlogPost,
         props.user.token,
       );
-      props.setMessage(
-        `Added Blog: ${postedBlog.title} - by: ${postedBlog.author}`,
+      dispatch(
+        showMessage(
+          `Added Blog: ${postedBlog.title} - by: ${postedBlog.author}`,
+        ),
       );
       setTimeout(() => {
-        props.setMessage(null);
+        dispatch(clearMessage());
       }, 3000);
       props.setBlogs(props.blogs.concat(postedBlog));
       props.postBlogRef.current.changeVisibility();
@@ -69,19 +73,6 @@ const PostBlogForm = (props) => {
       </form>
     </div>
   );
-};
-PostBlogForm.propTypes = {
-  user: PropTypes.shape({
-    token: PropTypes.string.isRequired,
-  }).isRequired,
-  setMessage: PropTypes.func.isRequired,
-  setBlogs: PropTypes.func.isRequired,
-  blogs: PropTypes.array.isRequired,
-  postBlogRef: PropTypes.shape({
-    current: PropTypes.shape({
-      changeVisibility: PropTypes.func.isRequired,
-    }),
-  }).isRequired,
 };
 
 export default PostBlogForm;
