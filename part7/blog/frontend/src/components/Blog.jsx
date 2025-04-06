@@ -1,20 +1,19 @@
 import blogService from "../services/blogs";
-import PropTypes from "prop-types";
 import Toggleable from "./Toggleable";
 import { useDispatch } from "react-redux";
 import { showMessage, clearMessage } from "../reducers/notificationReducer";
+import { likeBlog } from '../reducers/blogReducer'
 
 const Blog = (props) => {
   const dispatch = useDispatch();
-  const likeHandler = async (event) => {
-    event.preventDefault();
+  const likeHandler = async (blog) => {
 
     try {
       const updatedBlog = await blogService.likeBlog(
         props.blog.id,
         props.user.token,
       );
-
+      dispatch(likeBlog(blog))
       props.setBlogs((prevBlogs) =>
         prevBlogs.map((blog) =>
           blog.id !== updatedBlog.id ? blog : updatedBlog,
@@ -75,7 +74,7 @@ const Blog = (props) => {
           </li>
           <li>
             <strong>Likes: </strong>
-            {props.blog.likes} <button onClick={likeHandler}>Like</button>
+            {props.blog.likes} <button onClick={() => likeHandler(props.blog)}>Like</button>
           </li>
           <li>
             <strong>URL: </strong>

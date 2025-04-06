@@ -8,12 +8,15 @@ import PostBlogForm from "./components/PostBlogForm";
 import MessageSystem from "./components/MessageSystem";
 import Toggleable from "./components/Toggleable";
 import { initializeBlogs } from './reducers/blogReducer'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { checkUser, logout } from './reducers/userReducer'
 
 const App = () => {
   const dispatch = useDispatch()
+  const user = useSelector(state => state.user)
+
   const [blogs, setBlogs] = useState([]);
-  const [user, setUser] = useState(null);
+  const [, setUser] = useState(null);
 
   const postBlogRef = useRef();
 
@@ -28,14 +31,12 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    const storedUser = window.localStorage.getItem("loggedUser");
-    setUser(JSON.parse(storedUser));
+    dispatch(checkUser())
   }, []);
 
   const handleLogout = (event) => {
-    event.preventDefault();
     window.localStorage.clear();
-    setUser(null);
+    dispatch(logout());
   };
 
   if (!user) {
@@ -65,7 +66,7 @@ const App = () => {
           postBlogRef={postBlogRef}
         />
       </Toggleable>
-
+      
       {blogs.map((blog) => {
         return (
           <div className="blogContainer" key={blog.id}>
