@@ -1,84 +1,48 @@
-//Add Sorting Back
-
-import { useState, useEffect, useRef } from "react";
-import Blog from "./components/Blog";
+import { useEffect } from "react";
 import LoginForm from "./components/LoginForm";
-import blogService from "./services/blogs";
 import PostBlogForm from "./components/PostBlogForm";
 import MessageSystem from "./components/MessageSystem";
-import Toggleable from "./components/Toggleable";
-import { initializeBlogs } from './reducers/blogReducer'
-import { useDispatch, useSelector } from 'react-redux'
-import { checkUser, logout } from './reducers/userReducer'
+import { initializeBlogs } from "./reducers/blogReducer";
+import { useDispatch, useSelector } from "react-redux";
+import { checkUser } from "./reducers/userReducer";
+import BlogList from "./components/BlogList";
+import { Link, Routes, Route } from "react-router-dom";
+import Header from "./components/Header";
+import Users from "./components/Users";
+import User from "./components/User";
+import BlogDetailed from "./components/BlogDetailed";
+import Navbar from "./components/Navbar";
+import { Container } from "@mui/material";
 
 const App = () => {
-  const dispatch = useDispatch()
-  const user = useSelector(state => state.user)
-
-  const [blogs, setBlogs] = useState([]);
-  const [, setUser] = useState(null);
-
-  const postBlogRef = useRef();
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user);
 
   useEffect(() => {
-    const getData = async () => {
-      dispatch(initializeBlogs())
-      const allBlogs = await blogService.getAll();
-      const sortedBlogs = allBlogs.sort((a, b) => b.likes - a.likes);
-      setBlogs(sortedBlogs);
-    };
-    getData();
+    dispatch(initializeBlogs());
+    dispatch(checkUser());
   }, []);
-
-  useEffect(() => {
-    dispatch(checkUser())
-  }, []);
-
-  const handleLogout = (event) => {
-    window.localStorage.clear();
-    dispatch(logout());
-  };
 
   if (!user) {
     return (
       <div>
         <MessageSystem />
-        <LoginForm setUser={setUser} user={user} />
+        <LoginForm user={user} />
       </div>
     );
   }
   return (
-    <div>
-      <h2>BlogMania</h2>
-      <MessageSystem />
-      <p>
-        {user.name} is Logged in <button onClick={handleLogout}>Logout</button>
-      </p>
-      <Toggleable
-        buttonLabel={"Add New Blog"}
-        ref={postBlogRef}
-        closeLabel={"Cancel"}
-      >
-        <PostBlogForm
-          user={user}
-          blogs={blogs}
-          setBlogs={setBlogs}
-          postBlogRef={postBlogRef}
-        />
-      </Toggleable>
-      
-      {blogs.map((blog) => {
-        return (
-          <div className="blogContainer" key={blog.id}>
-            <Blog
-              blog={blog}
-              user={user}
-              setBlogs={setBlogs}
-            />
-          </div>
-        );
-      })}
-    </div>
+    <Container>
+      <Navbar />
+      <Header />
+      <Routes>
+        <Route path="/" element={<h2>Home</h2>} />
+        <Route path="/blogs" element={<BlogList />} />
+        <Route path="/users" element={<Users />} />
+        <Route path="/users/:id" element={<User />} />
+        <Route path="/blogs/:id" element={<BlogDetailed />} />
+      </Routes>
+    </Container>
   );
 };
 

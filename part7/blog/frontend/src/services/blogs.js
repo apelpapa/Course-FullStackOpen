@@ -41,7 +41,6 @@ const deleteBlog = async (blogID, token) => {
 };
 
 const likeBlog = async (blogID, token) => {
-  console.log(`${baseUrl}/${blogID}/like`)
   const response = await axios.put(
     `${baseUrl}/${blogID}/like`,
     {},

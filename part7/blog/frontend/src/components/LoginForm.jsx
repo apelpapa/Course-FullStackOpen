@@ -1,10 +1,10 @@
-import loginService from "../services/login";
 import { useState } from "react";
-import { clearMessage, showMessage } from "../reducers/notificationReducer";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { loginAttempt } from '../reducers/userReducer';
 
 const LoginForm = (props) => {
   const dispatch = useDispatch()
+  const user = useSelector(state => state.user)
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -13,16 +13,8 @@ const LoginForm = (props) => {
     const userAttempt = {
       username: username,
       password: password,
-    };
-    const loggedUser = await loginService.login(userAttempt);
-    props.setUser(loggedUser);
-    !loggedUser
-      ? dispatch(showMessage("Error: Invalid Username and/or Password. Try Again"))
-      : dispatch(clearMessage());
-    setTimeout(() => {
-      dispatch(clearMessage());
-    }, 3000);
-    window.localStorage.setItem("loggedUser", JSON.stringify(loggedUser));
+    }
+    dispatch(loginAttempt(userAttempt))
   };
 
   return (

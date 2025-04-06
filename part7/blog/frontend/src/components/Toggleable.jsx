@@ -1,23 +1,26 @@
 import { useState, forwardRef, useImperativeHandle } from "react";
-import PropTypes from "prop-types";
 
-const Toggleable = forwardRef((props, refs) => {
+const Toggleable = forwardRef((props, ref) => {
   const [visible, setVisible] = useState(false);
 
   const changeVisibility = () => {
-    visible ? setVisible(false) : setVisible(true);
+    setVisible(!visible);
   };
 
-  useImperativeHandle(refs, () => {
+  useImperativeHandle(ref, () => {
     return {
-      changeVisibility,
+      toggleVisibility: changeVisibility,
     };
   });
+
+  const style = {
+    marginBottom: 5,
+  };
 
   if (visible) {
     return (
       <>
-        <button style={{ marginBottom: 5 }} onClick={changeVisibility}>
+        <button style={style} onClick={changeVisibility}>
           {props.closeLabel}
         </button>
         {props.children}
@@ -29,11 +32,5 @@ const Toggleable = forwardRef((props, refs) => {
 });
 
 Toggleable.displayName = "Toggleable";
-
-Toggleable.propTypes = {
-  buttonLabel: PropTypes.string.isRequired,
-  closeLabel: PropTypes.string.isRequired,
-  children: PropTypes.node,
-};
 
 export default Toggleable;

@@ -1,13 +1,16 @@
-import { useDispatch } from "react-redux";
-import blogService from "../services/blogs";
-import { useState } from "react";
-import { clearMessage, showMessage } from "../reducers/notificationReducer";
+import { useDispatch, useSelector } from "react-redux";
+import { useState, useRef } from "react";
+import { addBlog } from "../reducers/blogReducer";
+import Toggleable from "./Toggleable";
 
 const PostBlogForm = (props) => {
+  const user = useSelector((state) => state.user)
   const dispatch = useDispatch();
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [url, setURL] = useState("");
+
+  const blogFormRef = useRef();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -16,27 +19,15 @@ const PostBlogForm = (props) => {
       author: author,
       url: url,
     };
-    try {
-      const postedBlog = await blogService.postBlog(
-        newBlogPost,
-        props.user.token,
-      );
-      dispatch(
-        showMessage(
-          `Added Blog: ${postedBlog.title} - by: ${postedBlog.author}`,
-        ),
-      );
-      setTimeout(() => {
-        dispatch(clearMessage());
-      }, 3000);
-      props.setBlogs(props.blogs.concat(postedBlog));
-      props.postBlogRef.current.changeVisibility();
-    } catch (error) {
-      console.error("Error Posting Blog", error);
-    }
+    dispatch(addBlog(newBlogPost, user.token))
+    setTitle("");
+    setAuthor("");
+    setURL("");
+    blogFormRef.current.toggleVisibility();
   };
 
   return (
+    <Toggleable buttonLabel={"Add New Blog"} closeLabel={"Cancel"} ref={blogFormRef}>
     <div>
       <form onSubmit={handleSubmit}>
         <h3 style={{ marginBottom: 0 }}>Submit New Post</h3>
@@ -72,6 +63,7 @@ const PostBlogForm = (props) => {
         </button>
       </form>
     </div>
+    </Toggleable>
   );
 };
 
