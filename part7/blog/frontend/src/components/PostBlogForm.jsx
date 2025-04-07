@@ -38,6 +38,7 @@ const PostBlogForm = (props) => {
             id="titleInput"
             onChange={({ target }) => setTitle(target.value)}
             value={title}
+            required
           />
         </div>
         <div>
@@ -47,6 +48,7 @@ const PostBlogForm = (props) => {
             id="authorInput"
             onChange={({ target }) => setAuthor(target.value)}
             value={author}
+            required
           />
         </div>
         <div>
@@ -56,6 +58,7 @@ const PostBlogForm = (props) => {
             id="urlInput"
             onChange={({ target }) => setURL(target.value)}
             value={url}
+            required
           />
         </div>
         <button type="submit" style={{ marginBottom: 10 }}>

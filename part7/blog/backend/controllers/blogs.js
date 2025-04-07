@@ -85,6 +85,7 @@ blogsRouter.put("/:id/like", async (req, res) => {
       new: true,
     }
   ).populate("user", { username: 1, name: 1 });
+  await updatedBlog.populate("comments", { comment: 1 });
   res.status(200).json(updatedBlog);
 });
 
@@ -105,8 +106,11 @@ blogsRouter.post("/:id/comments", async (req, res) => {
   const addedComment = await comment.save();
   blogResponse.comments = await blogResponse.comments.concat(addedComment._id);
   await blogResponse.save();
-  const populatedBlog = await blogResponse.populate('user', {username: 1, name: 1})
-  await populatedBlog.populate('comments', {comment:1})
+  const populatedBlog = await blogResponse.populate("user", {
+    username: 1,
+    name: 1,
+  });
+  await populatedBlog.populate("comments", { comment: 1 });
   res.status(200).json(populatedBlog);
 });
 

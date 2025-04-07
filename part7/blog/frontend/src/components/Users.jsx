@@ -6,7 +6,6 @@ import { Link } from "react-router-dom";
 const Users = () => {
   const dispatch = useDispatch();
   const users = useSelector((state) => state.allUsers);
-  console.log(users);
 
   useEffect(() => {
     dispatch(initializeAllUsers());

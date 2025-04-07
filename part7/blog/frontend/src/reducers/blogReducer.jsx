@@ -22,7 +22,6 @@ const blogSlice = createSlice({
     },
     newComment(state, action) {
       return state.map((state) => {
-        console.log(state.id, action.payload.id, action.payload)
         return state.id === action.payload.id ? action.payload : state
       });
     },
@@ -46,10 +45,7 @@ export const addBlog = (content, userToken) => {
       dispatch(newBlog(response));
       dispatch(
         showMessage(`Added Blog: ${response.title} - by: ${response.author}`),
-      );
-      setTimeout(() => {
-        dispatch(clearMessage());
-      }, 3000);
+      )
     } catch (error) {
       console.error("Error Posting Blog", error);
     }
@@ -64,15 +60,9 @@ export const likeBlog = (content, token) => {
       dispatch(
         showMessage(`You liked "${response.title}" by ${response.author}`),
       );
-      setTimeout(() => {
-        dispatch(clearMessage());
-      }, 3000);
     } catch (error) {
       console.error("Error liking the blog:", error);
       dispatch(showMessage(`Error: Failed to like the post`));
-      setTimeout(() => {
-        dispatch(clearMessage());
-      }, 3000);
     }
   };
 };
@@ -100,9 +90,6 @@ export const addComment = (blog, comment, userToken) => {
       dispatch(
         showMessage(`You Added Comment: "${response.comments[response.comments.length-1].comment}"`),
       );
-      setTimeout(() => {
-        dispatch(clearMessage());
-      }, 3000);
     } catch (error) {
       console.error("Failed To Add Comment:", error);
     }
