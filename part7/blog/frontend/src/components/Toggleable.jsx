@@ -1,3 +1,4 @@
+import { Button } from "@mui/material";
 import { useState, forwardRef, useImperativeHandle } from "react";
 
 const Toggleable = forwardRef((props, ref) => {
@@ -20,15 +21,24 @@ const Toggleable = forwardRef((props, ref) => {
   if (visible) {
     return (
       <>
-        <button style={style} onClick={changeVisibility}>
+        <Button
+          variant="contained"
+          size="small"
+          style={style}
+          onClick={changeVisibility}
+        >
           {props.closeLabel}
-        </button>
+        </Button>
         {props.children}
       </>
     );
   }
 
-  return <button onClick={changeVisibility}>{props.buttonLabel}</button>;
+  return (
+    <Button variant="contained" size="small" onClick={changeVisibility}>
+      {props.buttonLabel}
+    </Button>
+  );
 });
 
 Toggleable.displayName = "Toggleable";

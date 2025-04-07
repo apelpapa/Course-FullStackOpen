@@ -9,7 +9,7 @@ const BlogList = () => {
   const sortedBlogs = [...blogs].sort((a, b) => b.likes - a.likes);
 
   return (
-    <div>
+    <div style={{paddingTop: 5}}>
       <PostBlogForm />
       {sortedBlogs.map((blog) => {
         return (

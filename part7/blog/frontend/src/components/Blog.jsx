@@ -2,6 +2,7 @@ import Toggleable from "./Toggleable";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { deleteBlog, likeBlog } from "../reducers/blogReducer";
+import { Button } from "@mui/material";
 
 const Blog = ({ blog }) => {
   const dispatch = useDispatch();
@@ -31,7 +32,7 @@ const Blog = ({ blog }) => {
           </li>
           <li>
             <strong>Likes: </strong>
-            {blog.likes} <button onClick={() => dispatch(likeBlog(blog, user.token))}>Like</button>
+            {blog.likes} <Button size='small' variant="contained" onClick={() => dispatch(likeBlog(blog, user.token))}>Like</Button>
           </li>
           <li>
             <strong>URL: </strong>
@@ -43,9 +44,9 @@ const Blog = ({ blog }) => {
           </li>
         </ul>
         {blog.user.username === user.username ? (
-          <button className="deleteButton" onClick={deleteHandler}>
+          <Button variant="outlined" color='error' size='small' className="deleteButton" onClick={deleteHandler}>
             Delete
-          </button>
+          </Button>
         ) : null}
       </Toggleable>
     </div>

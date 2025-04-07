@@ -2,6 +2,7 @@ import { addComment } from "../reducers/blogReducer";
 import Toggleable from "./Toggleable";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
+import { Button, TextField } from "@mui/material";
 
 const PostCommentForm = ({ blog }) => {
   const [comment, setComment] = useState("");
@@ -12,14 +13,15 @@ const PostCommentForm = ({ blog }) => {
     <div>
       <Toggleable buttonLabel={"Add New Comment"} closeLabel={"Cancel"}>
         <label htmlFor="comment">Comment: </label>
-        <input
+        <TextField
+            size="small"
           type="text"
           value={comment}
           onChange={({ target }) => setComment(target.value)}
         />
-        <button onClick={() => dispatch(addComment(blog, comment, user.token))}>
+        <Button variant="contained" onClick={() => dispatch(addComment(blog, comment, user.token))}>
           Submit
-        </button>
+        </Button>
       </Toggleable>
     </div>
   );

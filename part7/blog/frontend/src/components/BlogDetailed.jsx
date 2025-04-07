@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useMatch } from "react-router-dom";
 import { likeBlog } from "../reducers/blogReducer";
 import PostCommentForm from "./PostCommentForm";
+import { Button } from "@mui/material";
 
 const style = {};
 
@@ -20,9 +21,9 @@ const BlogDetailed = () => {
       <a href={blog.url}>{blog.url}</a>
       <p>
         {blog.likes} Like(s)
-        <button onClick={() => dispatch(likeBlog(blog, user.token))}>
+        <Button size="small" variant="contained" onClick={() => dispatch(likeBlog(blog, user.token))}>
           Like
-        </button>
+        </Button>
       </p>
       <p>Added By: {blog.user.name}</p>
       <h3>Comments</h3>
