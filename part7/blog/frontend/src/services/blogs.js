@@ -12,7 +12,6 @@ const tokenHeader = (token) => {
 
 const getAll = async () => {
   const request = await axios.get(baseUrl);
-
   return request.data;
 };
 
@@ -20,7 +19,6 @@ const postBlog = async (newBlogPost, token) => {
   const response = await axios.post(baseUrl, newBlogPost, {
     headers: tokenHeader(token),
   });
-
   return response.data;
 };
 
@@ -51,4 +49,18 @@ const likeBlog = async (blogID, token) => {
   return response.data;
 };
 
-export default { getAll, postBlog, updateBlog, deleteBlog, likeBlog };
+const addComment = async (blogID, comment, token) => {
+  const response = await axios.post(`${baseUrl}/${blogID}/comments`, {comment: comment}, {
+    headers: tokenHeader(token),
+  });
+  return response.data
+};
+
+export default {
+  getAll,
+  postBlog,
+  updateBlog,
+  deleteBlog,
+  likeBlog,
+  addComment,
+};

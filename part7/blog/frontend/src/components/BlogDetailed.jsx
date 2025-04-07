@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useMatch } from "react-router-dom";
 import { likeBlog } from "../reducers/blogReducer";
+import PostCommentForm from "./PostCommentForm";
 
 const style = {};
 
@@ -25,6 +26,16 @@ const BlogDetailed = () => {
       </p>
       <p>Added By: {blog.user.name}</p>
       <h3>Comments</h3>
+      <PostCommentForm blog={blog} />
+      <ul>
+        {blog.comments.map(comment => {
+          return(
+            <li key={comment.id}>
+              {comment.comment}
+            </li>
+          )
+        })}
+      </ul>
     </div>
   );
 };
